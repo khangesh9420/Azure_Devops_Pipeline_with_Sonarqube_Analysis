@@ -18,6 +18,5 @@ steps:
     packageType: 'sdk'
     version: '8.0.x' # Specify the .NET Core SDK version
 
-steps:
 - script: dotnet build weatherApi/weatherApi.csproj --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
