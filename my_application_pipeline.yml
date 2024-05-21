@@ -21,3 +21,6 @@ steps:
 
 - script: dotnet build weatherapi/weatherapi.csproj --configuration $(buildConfiguration)
   displayName: 'Build $(buildConfiguration)'
+
+- script: dotnet publish weatherapi/weatherapi.csproj --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+  displayName: 'Publish $(buildConfiguration)'
