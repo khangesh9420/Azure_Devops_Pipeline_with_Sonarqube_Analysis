@@ -7,14 +7,17 @@ trigger:
 - main
 - feature/*
 
-pool:
-  vmImage: ubuntu-latest
+variables:
+  buildConfiguration: 'Release'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.0.x' # Specify the .NET Core SDK version
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- script: dotnet restore weatherapi/weatherapi.csproj
+  displayName: 'Restore dependencies'
+
+- script: dotnet build weatherapi/weatherapi.csproj --configuration $(buildConfiguration)
+  displayName: 'Build $(buildConfiguration)'
