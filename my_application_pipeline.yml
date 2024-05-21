@@ -24,3 +24,9 @@ steps:
 
 - script: dotnet publish weatherapi/weatherapi.csproj --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
   displayName: 'Publish $(buildConfiguration)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'application'
+    publishLocation: 'Container'
