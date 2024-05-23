@@ -24,3 +24,20 @@ stages:
         dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
+
+- stage: Deploy
+  displayName: Deploy image
+  jobs: 
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - script: |
+        echo "Building and running docker image using docker compose"
+        docker build -t weatherapi:$(tag) .
+      todisplayName: Build and Push Docker Image
+    - script: |
+        echo "Running weatherapi using docker compose"
+        docker-compose -f docker-compose.yml up -d
+      displayName: Run Docker Compose
