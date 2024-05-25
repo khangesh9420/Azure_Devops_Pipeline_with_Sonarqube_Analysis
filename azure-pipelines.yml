@@ -11,23 +11,8 @@ variables:
   containerRegistry: 'asp_dot_net_docker'
 
 stages:
-- stage: Login
-  displayName: Login to Docker
-  jobs:
-  - job: login
-    displayName: Login to Docker Registry
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - script: |
-        echo "Logging into the container registry"
-      env: 
-        DOCKER_USERNAME: $(dockerUsername)
-        DOCKER_PASSWORD: $(dockerPassword)
-
 - stage: Build
   displayName: Build Image
-  dependsOn: Login
   jobs:
   - job: build
     displayName: Build
