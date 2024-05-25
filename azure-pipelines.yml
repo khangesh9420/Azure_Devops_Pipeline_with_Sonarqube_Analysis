@@ -12,50 +12,53 @@ variables:
 
 stages:
 - stage: Login
-  displayName: Login docker
+  displayName: Login to Docker
   jobs:
   - job: login
-    displayName: Login to docker registery
+    displayName: Login to Docker Registry
     pool:
       vmImage: ubuntu-latest
-      steps:
-      - script: |
-          echo "logging into the container registry"
-        env: 
-          DOCKER_USERNAME: $(dockerUsername)
-          DOCKER_PASSWORD: $(dockerPassword)
+    steps:
+    - script: |
+        echo "Logging into the container registry"
+      env: 
+        DOCKER_USERNAME: $(dockerUsername)
+        DOCKER_PASSWORD: $(dockerPassword)
 
 - stage: Build
-  displayName: Build image
+  displayName: Build Image
+  dependsOn: Login
   jobs:
-  - job: Build
+  - job: build
     displayName: Build
     pool:
       vmImage: ubuntu-latest
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build and Push Docker Image
       inputs:
+        containerRegistry: $(containerRegistry)
         command: 'buildAndPush'
         dockerfile: '**/Dockerfile'
         tags: |
-          $(tag)
-
+          $(imageName):$(tag)
 
 - stage: Deploy
-  displayName: Deploy image
+  displayName: Deploy Image
+  dependsOn: Build
   jobs: 
-  - job: Deploy
+  - job: deploy
     displayName: Deploy
     pool:
       vmImage: ubuntu-latest
-    steps: |
+    steps:
+    - script: |
         echo "Running weatherapi using docker compose"
     - task: DockerCompose@0
-      inputs:
-          containerregistrytype: 'Container Registry'
-          dockerRegistryEndpoint: $(containerRegistry)
-          dockerComposeFile: '**/docker-compose.yml'
-          action: 'Run a Docker Compose command'
-          dockerComposeCommand: 'up -d'
       displayName: Run Docker Compose
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: $(containerRegistry)
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Run a Docker Compose command'
+        dockerComposeCommand: 'up -d'
