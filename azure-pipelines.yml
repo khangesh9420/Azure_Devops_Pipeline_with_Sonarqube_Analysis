@@ -36,6 +36,7 @@ stages:
     - script: |
         echo "Building and running docker image using docker compose"
         docker build -t weatherapi:$(tag) .
+        docker tag weatherapi:$(tag) $(containerRegistry)/weatherapi:$(tag)
       displayName: Build and Push Docker Image
     - script: |
         echo "Running weatherapi using docker compose"
