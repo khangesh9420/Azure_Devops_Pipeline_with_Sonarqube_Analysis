@@ -11,6 +11,20 @@ variables:
   containerRegistry: 'khangeshmatte123'
 
 stages:
+- stage: Login
+  displayName: Login docker
+  jobs:
+  - job: login
+    displayName: Login to docker registery
+    pool:
+      vmImage: ubuntu-latest
+      steps:
+      - script: |
+          echo "logging into the container registry"
+        env: 
+          DOCKER_USERNAME: $(dockerUsername)
+          DOCKER_PASSWORD: $(dockerPassword)
+
 - stage: Build
   displayName: Build image
   jobs:
@@ -26,6 +40,7 @@ stages:
         dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
+
 
 - stage: Deploy
   displayName: Deploy image
