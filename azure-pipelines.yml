@@ -22,11 +22,12 @@ stages:
     - task: Docker@2
       displayName: Build and Push Docker Image
       inputs:
-        containerRegistry: $(containerRegistry)
+        containerRegistry: 'asp_dot_net_docker'
+        repository: 'khangeshmatte123/dotnet'
         command: 'buildAndPush'
-        dockerfile: '**/Dockerfile'
+        Dockerfile: '**/Dockerfile'
         tags: |
-          $(imageName):$(tag)
+           $(tag)
 
 - stage: Deploy
   displayName: Deploy Image
