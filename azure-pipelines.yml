@@ -8,7 +8,7 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
   imageName: 'weatherapi'
-  containerRegistry: 'khangeshmatte123'
+  containerRegistry: 'asp_dot_net_docker'
 
 stages:
 - stage: Login
@@ -50,13 +50,21 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - script: |
-        echo "Building and running docker image using docker compose"
-        docker build -t $(imageName):$(tag) .
-        docker tag $(imageName):$(tag) $(containerRegistry)/$(imageName):$(tag)
-        docker push $(containerRegistry)/$(imageName):$(tag)
+    - task: Docker@2
+      inputs:
+        containerRegistry: $(containerRegistry)
+        repository: $(imageName)
+        command: 'push'
+        tags: |
+          $(tag)
       displayName: Build and Push Docker Image
     - script: |
         echo "Running weatherapi using docker compose"
-        docker-compose -f docker-compose.yml up -d
+    - task: DockerCompose@0
+      inputs:
+          containerregistrytype: 'Container Registry'
+          dockerRegistryEndpoint: $(containerRegistry)
+          dockerComposeFile: '**/docker-compose.yml'
+          action: 'Run a Docker Compose command'
+          dockerComposeCommand: 'docker-compose -f docker-compose.yml up -d'
       displayName: Run Docker Compose
