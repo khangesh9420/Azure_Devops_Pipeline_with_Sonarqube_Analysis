@@ -2,12 +2,14 @@ trigger:
 - main
 - feature/*
 
+pr:
+- none
+
 resources:
 - repo: self
 
 variables:
   tag: '$(Build.BuildId)'
-  imageName: 'weatherapi'
   containerRegistry: 'asp_dot_net_docker'
 
 stages:
@@ -22,7 +24,7 @@ stages:
     - task: Docker@2
       displayName: Build and Push Docker Image
       inputs:
-        containerRegistry: 'asp_dot_net_docker'
+        containerRegistry: $(containerRegistry)
         repository: 'khangeshmatte123/dotnet'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
