@@ -10,11 +10,19 @@ resources:
 
 stages:
 - stage: Linetrs
+<<<<<<< HEAD
   displayName: Linter check for the present file
   jobs: 
   - job: Linters
   pool:
     vmImage: ubuntu-latest
+=======
+  display_name: Linter check for the present file
+  Jobs: 
+  - job: Linters
+  pool:
+  -  vmImage: 'ubuntu-latest'
+>>>>>>> cfc5c581d2430663ab1134cb5f9431fdb7b880b9
   steps:
   - scripts: |
       echo "Installing yamllint"
