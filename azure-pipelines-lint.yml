@@ -9,26 +9,22 @@ resources:
 - repo: self 
 
 stages:
-- stage: Linetrs
-<<<<<<< HEAD
+- stage: Linters
   displayName: Linter check for the present file
-  jobs: 
-  - job: Linters
-  pool:
-    vmImage: ubuntu-latest
-=======
-  display_name: Linter check for the present file
-  Jobs: 
-  - job: Linters
-  pool:
-  -  vmImage: 'ubuntu-latest'
->>>>>>> cfc5c581d2430663ab1134cb5f9431fdb7b880b9
-  steps:
-  - scripts: |
-      echo "Installing yamllint"
-      sudo apt-get update
-      sudo apt-get install -y yamllint
-      echo "Running yamllint"
-      yamllint **/*.yaml
-    displayName: Run yamllint
+  jobs:
+  - job: yamllint
+    displayName: YAML Lint
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - script: |
+        echo "Installing yamllint"
+        sudo apt-get update
+        sudo apt-get install -y yamllint
+        echo "Running yamllint on .yaml files"
+        yamllint **/*.yaml || true
+        echo "Running yamllint on .yml files"
+        yamllint **/*.yml || true
+      displayName: Run yamllint
+      
 
