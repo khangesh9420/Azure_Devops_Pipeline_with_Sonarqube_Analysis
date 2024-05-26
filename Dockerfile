@@ -20,6 +20,7 @@ RUN dotnet build "weatherapi.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "weatherapi.csproj" -c Release -o /app/publish
 
+
 # final Image
 FROM base AS final
 WORKDIR /app
