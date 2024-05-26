@@ -22,9 +22,19 @@ stages:
         sudo apt-get update
         sudo apt-get install -y yamllint
         echo "Running yamllint on .yaml files"
-        yamllint **/*.yaml || true
+        find . -type f -name '*.yaml' -exec yamllint {} +
         echo "Running yamllint on .yml files"
-        yamllint **/*.yml || true
+        find . -type f -name '*.yml' -exec yamllint {} +
       displayName: Run yamllint
-      
 
+  - job: dotnetlint
+    displayName: dotnet Lint
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - script: |
+        echo "Installing .NET format tool"
+        dotnet tool install -g dotnet-format
+        echo "Running .NET format"
+        dotnet-format --check **/*.cs
+      displayName: Run .NET format
