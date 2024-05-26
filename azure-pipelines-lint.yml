@@ -8,14 +8,19 @@ pr:
 resources:
 - repo: self 
 
-pool:
-  vmImage: ubuntu-latest
+stages:
+- stage: Linetrs
+  displayName: Linter check for the present file
+  jobs: 
+  - job: Linters
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - scripts: |
+      echo "Installing yamllint"
+      sudo apt-get update
+      sudo apt-get install -y yamllint
+      echo "Running yamllint"
+      yamllint **/*.yaml
+    displayName: Run yamllint
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
