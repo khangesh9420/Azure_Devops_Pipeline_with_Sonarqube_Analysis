@@ -10,7 +10,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-  containerRegistry: 'asp_dot_net_docker'
+  containerRegistry: 'Docker-Azure-Dotnet'
 
 stages:
 - stage: Build
