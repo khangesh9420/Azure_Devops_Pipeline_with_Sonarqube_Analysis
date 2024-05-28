@@ -45,6 +45,20 @@ stages:
         tags: |
            $(tag)
 
+- stage: Test
+  displayName: Test Image
+  dependsOn: Build
+  jobs: 
+  - job:Test
+    displayName: Unit testing
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - script: |
+        dotnet test weatherapi/weatherapi.csproj --configuration Debug --no-build --logger trx
+      displayName: Run Tests
+
+
 - stage: Deploy
   displayName: Deploy Image
   dependsOn: Build
