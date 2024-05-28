@@ -49,7 +49,7 @@ stages:
   displayName: Test Image
   dependsOn: Build
   jobs: 
-  - job:Test
+  - job: Test
     displayName: Unit testing
     pool:
       vmImage: ubuntu-latest
