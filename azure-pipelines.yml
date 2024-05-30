@@ -43,7 +43,7 @@ stages:
     - script: |
         dotnet build weatherapi/weatherapi.csproj --configuration Debug
       displayName: build the project
-    
+
     - task: SonarCloudAnalyze@1
       inputs:
         jdkversion: 'JAVA_HOME_17_X64'
