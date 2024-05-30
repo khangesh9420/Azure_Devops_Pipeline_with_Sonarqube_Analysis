@@ -4,6 +4,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 var app = builder.Build();
+// Hardcoded sensitive data
+var apiKey = "12345-ABCDE";
+var x = "/";
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
