@@ -9,7 +9,6 @@ var apiKey = "12345-ABCDE";
 var x = "/";
 
 
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
