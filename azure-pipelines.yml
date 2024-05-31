@@ -1,6 +1,5 @@
 trigger:
 - main
-- feature/*
 
 pr:
 - none
@@ -19,37 +18,38 @@ stages:
   - job: build
     displayName: Build
     pool:
-      vmImage: windows-latest
+      vmImage: ubuntu-latest
     steps:
     - task: UseDotNet@2
       displayName: use dotnet asp core
       inputs:
         pacakgeType: sdk
-
         version: '8.0.x'
 
     - script: |
         dotnet restore weatherapi/weatherapi.csproj
       displayName: restore packages
 
-    - task: SonarQubePrepare@6
+    
+    - task: SonarCloudPrepare@2
       inputs:
-        SonarQube: 'Sonarqube_source'
+        SonarCloud: 'Sonarcube'
+        organization: 'dotnet-sonarcube'
         scannerMode: 'MSBuild'
-        projectKey: 'Intial_app_dotnet_Intial_app_dotnet_26be5bf9-11c5-486e-884c-7796d593a2e0'
-        projectName: 'soanrqube_analysis'
+        projectKey: 'Khangesh_Intial_app_dotnet'
+        projectName: 'sonarcloud analysis'
 
     - script: |
         dotnet build weatherapi/weatherapi.csproj --configuration Debug
       displayName: build the project
 
-    - task: SonarQubeAnalyze@6
+    - task: SonarCloudAnalyze@2
       inputs:
-        jdkversion: 'JAVA_HOME_17_X64'
+          jdkversion: 'JAVA_HOME_17_X64'
 
-    - task: SonarQubePublish@6
+    - task: SonarCloudPublish@2
       inputs:
-        pollingTimeoutSec: '300'
+          pollingTimeoutSec: '300'
 
     - task: Docker@2
       displayName: Build and Push Docker Image
@@ -68,7 +68,7 @@ stages:
   - job: Test
     displayName: Unit testing
     pool:
-      vmImage: windows-latest
+      vmImage: ubuntu-latest
     steps:
     - script: |
         mkdir -p TestResults
@@ -92,7 +92,7 @@ stages:
   - job: deploy
     displayName: Deploy
     pool:
-      vmImage: windows-latest
+      vmImage: ubuntu-latest
     steps:
     - script: |
         echo "Running weatherapi using docker compose"
