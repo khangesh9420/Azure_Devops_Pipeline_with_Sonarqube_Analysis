@@ -31,24 +31,23 @@ stages:
     - script: |
         dotnet restore weatherapi/weatherapi.csproj
       displayName: restore packages
-    
-    - task: SonarCloudPrepare@1
+
+    - task: SonarQubePrepare@6
       inputs:
-        SonarCloud: 'Sonarcube'
-        organization: 'dotnet-sonarcube'
+        SonarQube: 'Sonarqube_source'
         scannerMode: 'MSBuild'
-        projectKey: 'Khangesh_Intial_app_dotnet'
-        projectName: 'First-Project_with_sonarqube'
+        projectKey: 'Intial_app_dotnet_Intial_app_dotnet_26be5bf9-11c5-486e-884c-7796d593a2e0'
+        projectName: 'soanrqube_analysis'
 
     - script: |
         dotnet build weatherapi/weatherapi.csproj --configuration Debug
       displayName: build the project
 
-    - task: SonarCloudAnalyze@1
+    - task: SonarQubeAnalyze@6
       inputs:
         jdkversion: 'JAVA_HOME_17_X64'
 
-    - task: SonarCloudPublish@1
+    - task: SonarQubePublish@6
       inputs:
         pollingTimeoutSec: '300'
 
