@@ -19,7 +19,7 @@ stages:
   - job: build
     displayName: Build
     pool:
-      vmImage: ubuntu-latest
+      vmImage: windows-latest
     steps:
     - task: UseDotNet@2
       displayName: use dotnet asp core
@@ -68,7 +68,7 @@ stages:
   - job: Test
     displayName: Unit testing
     pool:
-      vmImage: ubuntu-latest
+      vmImage: windows-latest
     steps:
     - script: |
         mkdir -p TestResults
@@ -92,7 +92,7 @@ stages:
   - job: deploy
     displayName: Deploy
     pool:
-      vmImage: ubuntu-latest
+      vmImage: windows-latest
     steps:
     - script: |
         echo "Running weatherapi using docker compose"
