@@ -68,7 +68,7 @@ stages:
     steps:
     - script: |
         mkdir -p TestResults
-        dotnet test weatherapi/weatherapi.csproj --configuration Debug --no-build --logger "trx;LogFileName=TestResults/test_results.trx"
+        dotnet test weatherapi/weatherapi.Tests --configuration Debug --no-build --logger "trx;LogFileName=TestResults/test_results.trx"
       displayName: Run Tests
 
     - task: PublishTestResults@2
