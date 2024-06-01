@@ -99,10 +99,9 @@ stages:
         dockerComposeCommand: 'up -d'
         build: false
 
-
 - stage: Deploy
   displayName: Deploy Image
-  dependsOn: Build
+  dependsOn: Staging
   jobs: 
   - job: deploy
     displayName: Deploy
@@ -119,4 +118,4 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Run a Docker Compose command'
         dockerComposeCommand: 'up -d'
-        build: true
+        build: false
