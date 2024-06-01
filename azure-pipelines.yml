@@ -20,7 +20,7 @@ stages:
     - task: UseDotNet@2
       displayName: use dotnet asp core
       inputs:
-        pacakgeType: sdk
+        packageType: sdk
         version: '8.0.x'
 
     - script: |
@@ -74,11 +74,7 @@ stages:
         command: 'test'
         projects: '**/weatherapi.Tests.csproj'
         configuration: '(buildConfiguration)'
-      
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'publish'
-        publishWebProjects: true
+        arguments: '--collect:"XPlat Code Coverage" --logger "trx;LogFileName=testresults.trx" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
 
 
 - stage: Deploy
