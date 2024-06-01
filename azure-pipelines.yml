@@ -67,18 +67,13 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - script: |
-        mkdir -p TestResults
-        dotnet test weatherapi/weatherapi.Tests --configuration Debug --no-build --logger "trx;LogFileName=TestResults/test_results.trx"
+        
       displayName: Run Tests
-
-    - task: PublishTestResults@2
-      displayName: Publish test results
+    - task: DotNetCoreCLI@2
       inputs:
-        testResultsFormat: 'VSTest'
-        testResultsFiles: '**/*.trx'
-        mergeTestResults: true
-        failTaskOnFailedTests: true
-        failTaskOnFailureToPublishResults: true
+        command: 'test'
+        projects: '**/weatherapi.Tests.csproj'
+        configuration: '(buildConfiguration)'
 
 
 - stage: Deploy
