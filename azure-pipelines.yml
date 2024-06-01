@@ -20,7 +20,7 @@ stages:
     - task: UseDotNet@2
       displayName: use dotnet asp core
       inputs:
-        pacakgeType: sdk
+        packageType: sdk
         version: '8.0.x'
 
     - script: |
@@ -67,18 +67,14 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - script: |
-        mkdir -p TestResults
-        dotnet test weatherapi/weatherapi.csproj --configuration Debug --no-build --logger "trx;LogFileName=TestResults/test_results.trx"
+        
       displayName: Run Tests
-
-    - task: PublishTestResults@2
-      displayName: Publish test results
+    - task: DotNetCoreCLI@2
       inputs:
-        testResultsFormat: 'VSTest'
-        testResultsFiles: '**/*.trx'
-        mergeTestResults: true
-        failTaskOnFailedTests: true
-        failTaskOnFailureToPublishResults: true
+        command: 'test'
+        projects: '**/weatherapi.Tests.csproj'
+        configuration: '(buildConfiguration)'
+        arguments: '--collect:"XPlat Code Coverage" --logger "trx;LogFileName=testresults.trx" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
 
 
 - stage: Deploy
