@@ -13,7 +13,7 @@ stages:
     - task: DockerCompose@0
       displayName: Run Docker Compose
       inputs:
-        containerregistrytype: 'Container Registry'aa
+        containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: $(containerRegistry)
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Run a Docker Compose command'
