@@ -4,6 +4,9 @@ trigger:
 pr:
 - none
 
+pr:
+- none
+
 resources:
 - repo: self
 
@@ -29,7 +32,6 @@ stages:
     - script: |
         dotnet restore weatherapi/weatherapi.csproj
       displayName: restore packages
-
     
     - task: SonarCloudPrepare@2
       inputs:
@@ -104,3 +106,4 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Run a Docker Compose command'
         dockerComposeCommand: 'up -d'
+        build: true
