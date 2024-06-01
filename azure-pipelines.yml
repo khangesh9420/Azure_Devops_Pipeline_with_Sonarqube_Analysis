@@ -74,6 +74,11 @@ stages:
         command: 'test'
         projects: '**/weatherapi.Tests.csproj'
         configuration: '(buildConfiguration)'
+      
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
 
 
 - stage: Deploy
