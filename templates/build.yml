@@ -1,0 +1,48 @@
+stages:
+- stage: Build
+  displayName: Build Image
+  jobs:
+  - job: build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: UseDotNet@2
+      displayName: use dotnet asp core
+      inputs:
+        packageType: sdk
+        version: '8.0.x'
+
+    - script: |
+        dotnet restore weatherapi/weatherapi.csproj
+      displayName: restore packages
+    
+    - task: SonarCloudPrepare@2
+      inputs:
+        SonarCloud: 'Sonarcube'
+        organization: 'dotnet-sonarcube'
+        scannerMode: 'MSBuild'
+        projectKey: 'Khangesh_Intial_app_dotnet'
+        projectName: 'sonarcloud analysis'
+
+    - script: |
+        dotnet build weatherapi/weatherapi.csproj --configuration Debug
+      displayName: build the project
+
+    - task: SonarCloudAnalyze@2
+      inputs:
+          jdkversion: 'JAVA_HOME_17_X64'
+
+    - task: SonarCloudPublish@2
+      inputs:
+          pollingTimeoutSec: '300'
+
+    - task: Docker@2
+      displayName: Build and Push Docker Image
+      inputs:
+        containerRegistry: $(containerRegistry)
+        repository: 'khangeshmatte123/dotnet'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: |
+           $(tag)

@@ -1,0 +1,19 @@
+stages:
+- stage: Test
+  displayName: Test Image
+  dependsOn: Build
+  jobs: 
+  - job: Test
+    displayName: Unit testing
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - script: |
+
+      displayName: Run Tests
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: '**/weatherapi.Tests.csproj'
+        configuration: '(buildConfiguration)'
+        arguments: '--collect:"XPlat Code Coverage" --logger "trx;LogFileName=testresults.trx" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
