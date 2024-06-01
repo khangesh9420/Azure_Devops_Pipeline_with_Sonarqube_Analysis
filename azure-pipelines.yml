@@ -77,6 +77,18 @@ stages:
         arguments: '--collect:"XPlat Code Coverage" --logger "trx;LogFileName=testresults.trx" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
 
 
+- stage: Staging
+  displayName: Staging Deploy
+  dependsOn: Test
+  condition: succeeded()
+  jobs:
+  - job: stagingDeploy
+    displayName: Creating staging enviornment
+    pool:
+      vmImage: ubuntu-latest
+
+
+
 - stage: Deploy
   displayName: Deploy Image
   dependsOn: Build
