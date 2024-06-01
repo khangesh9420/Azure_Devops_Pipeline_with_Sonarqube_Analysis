@@ -86,15 +86,18 @@ stages:
     displayName: Creating staging enviornment
     pool:
       vmImage: ubuntu-latest
-  - task: DockerCompose@0
-    displayName: Run Docker Compose
-    inputs:
-      containerregistrytype: 'Container Registry'
-      dockerRegistryEndpoint: $(containerRegistry)
-      dockerComposeFile: '**/docker-compose.yml'
-      action: 'Run a Docker Compose command'
-      dockerComposeCommand: 'up -d'
-      build: false
+    steps:
+    - script: |
+        echo "Running Staging before deployment"
+    - task: DockerCompose@0
+      displayName: Run Docker Compose
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: $(containerRegistry)
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Run a Docker Compose command'
+        dockerComposeCommand: 'up -d'
+        build: false
 
 
 - stage: Deploy
