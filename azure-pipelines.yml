@@ -3,6 +3,10 @@ trigger:
     include:
       - main
 
+pr:
+  - main
+  - releases/*
+
 resources:
 - repo: self
 
@@ -19,3 +23,8 @@ stages:
 - template: templates/staging.yml
 
 - template: templates/deploy.yml
+
+# Add the checkout step for sonarscanner
+steps:
+- checkout: self
+  fetchDepth: 0
