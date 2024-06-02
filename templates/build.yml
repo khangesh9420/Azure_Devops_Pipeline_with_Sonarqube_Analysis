@@ -5,7 +5,7 @@ stages:
   - job: build
     displayName: Build
     pool:
-      vmImage: ubuntu-latest
+      vmImage: '$(hosted_agent)'
     steps:
     - checkout: self
       fetchDepth: 0
@@ -49,7 +49,7 @@ stages:
       inputs:
         command: 'build'
         containerRegistry: $(containerRegistry)
-        repository: 'khangeshmatte123/dotnet'
+        repository: $(dockerRepo)
         Dockerfile: '**/Dockerfile'
         tags: |
            $(tag)
@@ -58,7 +58,7 @@ stages:
       displayName: Push docker image
       inputs:
         containerRegistry: $(containerRegistry)
-        repository: 'khangeshmatte123/dotnet'
+        repository: $(dockerRepo)
         command: 'push'
         Dockerfile: '**/Dockerfile'
         tags: |

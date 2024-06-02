@@ -7,7 +7,7 @@ stages:
   - job: stagingDeploy
     displayName: Creating staging enviornment
     pool:
-      vmImage: ubuntu-latest
+      vmImage: '$(hosted_agent)'
     steps:
     - script: |
         echo "Running Staging before deployment"

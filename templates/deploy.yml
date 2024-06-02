@@ -6,7 +6,7 @@ stages:
   - job: deploy
     displayName: Deploy
     pool:
-      vmImage: ubuntu-latest
+      vmImage: '$(hosted_agent)'
     steps:
     - script: |
         echo "Running weatherapi using docker compose"
