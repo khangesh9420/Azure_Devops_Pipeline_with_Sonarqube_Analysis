@@ -6,6 +6,7 @@ trigger:
 pr:
   - main
   - releases/*
+  - feature/*
 
 resources:
 - repo: self
