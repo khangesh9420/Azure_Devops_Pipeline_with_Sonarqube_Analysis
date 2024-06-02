@@ -23,5 +23,7 @@ stages:
 
 - template: templates/staging.yml
 
+- template: templates/release.yml
+
 - template: templates/deploy.yml
 
