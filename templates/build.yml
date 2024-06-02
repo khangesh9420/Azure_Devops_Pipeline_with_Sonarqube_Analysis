@@ -36,12 +36,6 @@ stages:
         dotnet publish weatherapi/weatherapi.csproj --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
       displayName: 'Publish $(buildConfiguration)'
 
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/*.zip'
-        ArtifactName: 'application'
-        publishLocation: 'Container'
-
     - task: SonarCloudAnalyze@2
       inputs:
         jdkversion: 'JAVA_HOME_17_X64'
@@ -70,3 +64,9 @@ stages:
         tags: |
            $(tag)
       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'application'
+        publishLocation: 'Container'
