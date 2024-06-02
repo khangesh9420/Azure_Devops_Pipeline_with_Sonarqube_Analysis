@@ -38,7 +38,7 @@ stages:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/weatherapi'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/publish'
         ArtifactName: 'application'
         publishLocation: 'Container'
 
