@@ -38,7 +38,7 @@ stages:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/publish'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/*.zip'
         ArtifactName: 'application'
         publishLocation: 'Container'
 
