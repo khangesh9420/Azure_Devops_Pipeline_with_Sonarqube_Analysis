@@ -68,5 +68,5 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'application'
+        ArtifactName: 'drop'
         publishLocation: 'Container'
