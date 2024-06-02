@@ -38,11 +38,20 @@ stages:
           pollingTimeoutSec: '300'
 
     - task: Docker@2
-      displayName: Build and Push Docker Image
+      displayName: Build docker image
       inputs:
-        containerRegistry: $(containerRegistry)
-        repository: 'khangeshmatte123/dotnet'
-        command: 'buildAndPush'
+        command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: |
            $(tag)
+    
+    - task: Docker@2
+      displayName: Push docker image
+      inputs:
+        containerRegistry: $(containerRegistry)
+        repository: 'khangeshmatte123/dotnet'
+        command: 'push'
+        Dockerfile: '**/Dockerfile'
+        tags: |
+           $(tag)
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
