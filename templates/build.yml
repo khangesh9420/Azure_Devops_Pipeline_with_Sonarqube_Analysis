@@ -7,6 +7,9 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+    - checkout: self
+      fetchDepth: 0
+
     - task: UseDotNet@2
       displayName: use dotnet asp core
       inputs:
@@ -23,7 +26,7 @@ stages:
         organization: 'dotnet-sonarcube'
         scannerMode: 'MSBuild'
         projectKey: 'Khangesh_Intial_app_dotnet'
-        projectName: 'sonarcloud analysis'
+        projectName: 'Intial_app_dotnet'
 
     - script: |
         dotnet build weatherapi/weatherapi.csproj --configuration Debug

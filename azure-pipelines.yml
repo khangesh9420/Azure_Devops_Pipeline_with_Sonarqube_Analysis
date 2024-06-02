@@ -24,7 +24,3 @@ stages:
 
 - template: templates/deploy.yml
 
-# Add the checkout step for sonarscanner
-steps:
-- checkout: self
-  fetchDepth: 0
