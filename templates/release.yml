@@ -1,4 +1,4 @@
-stges:
+stages:
 - stage: Release
     displayName: Release
     dependsOn: Staging
