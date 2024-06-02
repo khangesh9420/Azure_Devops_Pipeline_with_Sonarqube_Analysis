@@ -1,0 +1,70 @@
+stages:
+- stage: Build
+  displayName: Build Image
+  jobs:
+  - job: build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - checkout: self
+      fetchDepth: 0
+
+    - task: UseDotNet@2
+      displayName: use dotnet asp core
+      inputs:
+        packageType: sdk
+        version: '8.0.x'
+
+    - script: |
+        dotnet restore weatherapi/weatherapi.csproj
+      displayName: restore packages
+    
+    - task: SonarCloudPrepare@2
+      inputs:
+        SonarCloud: 'New_Sonar_analysis'
+        organization: 'dotnet-sonarcube'
+        scannerMode: 'MSBuild'
+        projectKey: 'Khangesh_Intial_app_dotnet'
+        projectName: 'Intial_app_dotnet'
+
+    - script: |
+        dotnet build weatherapi/weatherapi.csproj --configuration $(buildConfiguration)
+      displayName: build the project
+
+    - script: |
+        dotnet publish weatherapi/weatherapi.csproj --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+      displayName: 'Publish $(buildConfiguration)'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'application'
+        publishLocation: 'Container'
+
+    - task: SonarCloudAnalyze@2
+      inputs:
+        jdkversion: 'JAVA_HOME_17_X64'
+
+    - task: SonarCloudPublish@2
+      inputs:
+        pollingTimeoutSec: '300'
+
+    - task: Docker@2
+      displayName: Build docker image
+      inputs:
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: |
+           $(tag)
+    
+    - task: Docker@2
+      displayName: Push docker image
+      inputs:
+        containerRegistry: $(containerRegistry)
+        repository: 'khangeshmatte123/dotnet'
+        command: 'push'
+        Dockerfile: '**/Dockerfile'
+        tags: |
+           $(tag)
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
