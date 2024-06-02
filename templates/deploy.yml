@@ -31,5 +31,5 @@ stages:
 
     # Health check
     - script: |
-        curl -f http://localhost:8080/health || exit 1
+        curl -f http://localhost:8081/api/weather || exit 1
       displayName: Health Check
