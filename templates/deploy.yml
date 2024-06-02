@@ -24,3 +24,12 @@ stages:
     - script: |
         docker ps -a
       displayName: Check Container Status
+
+    - script: |
+        docker-compose logs
+      displayName: Inspect Container Logs
+
+    # Health check
+    - script: |
+        curl -f http://localhost:8080/health || exit 1
+      displayName: Health Check
