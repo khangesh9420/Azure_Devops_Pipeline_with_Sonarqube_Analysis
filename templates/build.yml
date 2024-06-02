@@ -54,6 +54,8 @@ stages:
       displayName: Build docker image
       inputs:
         command: 'build'
+        containerRegistry: $(containerRegistry)
+        repository: 'khangeshmatte123/dotnet'
         Dockerfile: '**/Dockerfile'
         tags: |
            $(tag)
