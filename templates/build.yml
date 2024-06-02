@@ -22,7 +22,7 @@ stages:
     
     - task: SonarCloudPrepare@2
       inputs:
-        SonarCloud: 'Sonarcube'
+        SonarCloud: 'New_Sonar_analysis'
         organization: 'dotnet-sonarcube'
         scannerMode: 'MSBuild'
         projectKey: 'Khangesh_Intial_app_dotnet'
@@ -34,11 +34,11 @@ stages:
 
     - task: SonarCloudAnalyze@2
       inputs:
-          jdkversion: 'JAVA_HOME_17_X64'
+        jdkversion: 'JAVA_HOME_17_X64'
 
     - task: SonarCloudPublish@2
       inputs:
-          pollingTimeoutSec: '300'
+        pollingTimeoutSec: '300'
 
     - task: Docker@2
       displayName: Build docker image
