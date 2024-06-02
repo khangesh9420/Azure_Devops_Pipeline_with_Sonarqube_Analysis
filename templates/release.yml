@@ -1,0 +1,22 @@
+stges:
+- stage: Release
+    displayName: Release
+    dependsOn: Staging
+    condition: succeeded()
+    jobs:
+      - job: release
+        displayName: Release
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: echo "Tagging source code with version number"
+            displayName: Tag Source Code
+            env:
+              VersionNumber: $(Build.BuildNumber)
+          - script: |
+              # Tagging the source code with the current version number
+              git tag $(VersionNumber)
+              git push --tags
+            displayName: Tag Source Code
+            env:
+              VersionNumber: $(Build.BuildNumber)
