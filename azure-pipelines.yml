@@ -6,7 +6,6 @@ trigger:
 pr:
   - main
   - releases/*
-  - feature/*
 
 resources:
 - repo: self
@@ -14,6 +13,7 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
   containerRegistry: 'asp_dot_net_docker'
+  buildConfiguration: 'Release'
 
 stages:
 
@@ -22,8 +22,6 @@ stages:
 - template: templates/test.yml
 
 - template: templates/staging.yml
-
-- template: templates/release.yml
 
 - template: templates/deploy.yml
 

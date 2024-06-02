@@ -29,8 +29,18 @@ stages:
         projectName: 'Intial_app_dotnet'
 
     - script: |
-        dotnet build weatherapi/weatherapi.csproj --configuration Debug
+        dotnet build weatherapi/weatherapi.csproj --configuration $(buildConfiguration)
       displayName: build the project
+
+    - script: |
+        dotnet publish weatherapi/weatherapi.csproj --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+      displayName: 'Publish $(buildConfiguration)'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'application'
+        publishLocation: 'Container'
 
     - task: SonarCloudAnalyze@2
       inputs:

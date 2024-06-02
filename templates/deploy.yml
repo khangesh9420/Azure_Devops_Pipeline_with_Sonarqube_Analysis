@@ -1,7 +1,7 @@
 stages:
 - stage: Deploy
   displayName: Deploy Image
-  dependsOn: Release
+  dependsOn: Staging
   jobs: 
   - job: deploy
     displayName: Deploy
