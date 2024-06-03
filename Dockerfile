@@ -11,7 +11,7 @@ COPY ["weatherapi/weatherapi.csproj", "weatherapi/"]
 RUN dotnet restore "weatherapi/weatherapi.csproj"
 # copy from local to docker
 COPY . .
-# This is the application which I want to run
+# This is the application which I want to rundo
 WORKDIR "/src/weatherapi/"
 # build the application with the release tag and keep in output folder /app/build
 RUN dotnet build "weatherapi.csproj" -c Release -o /app/build
