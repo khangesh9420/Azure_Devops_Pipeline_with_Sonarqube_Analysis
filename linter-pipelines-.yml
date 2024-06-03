@@ -1,0 +1,24 @@
+trigger:
+- main
+
+pr:
+- none
+
+resources:
+- repo: self 
+
+stages:
+- stage: MarkdownLint
+  displayName: Markdown Lint
+  jobs:
+  - job: markdownlint
+    displayName: Markdown Lint
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - script: |
+        echo "Installing markdownlint"
+        npm install -g markdownlint-cli
+        echo "Running markdownlint on .md files"
+        find . -type f -name '*.md' -exec markdownlint {} +
+      displayName: Run markdownlint
