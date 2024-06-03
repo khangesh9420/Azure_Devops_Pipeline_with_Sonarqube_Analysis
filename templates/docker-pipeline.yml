@@ -1,0 +1,30 @@
+stages:
+- stage: BuildAndPushDockerImage
+  displayName: Build and Push Docker Image
+  dependsOn: Build
+  jobs:
+  - job: dockerBuildAndPush
+    displayName: Build and Push Docker Image
+    pool:
+      vmImage: '$(hosted_agent)'
+    steps:
+    - task: Docker@2
+      displayName: Build docker image
+      inputs:
+        command: 'build'
+        containerRegistry: $(containerRegistry)
+        repository: $(dockerRepo)
+        Dockerfile: '**/Dockerfile'
+        tags: |
+            $(tag)
+    
+    - task: Docker@2
+      displayName: Push docker image
+      inputs:
+        containerRegistry: $(containerRegistry)
+        repository: $(dockerRepo)
+        command: 'push'
+        Dockerfile: '**/Dockerfile'
+        tags: |
+            $(tag)
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))

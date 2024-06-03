@@ -21,6 +21,8 @@ stages:
 
 - template: templates/build.yml
 
+- template: templates/docker-pipeline.yml
+
 - template: templates/test.yml
 
 - template: templates/staging.yml

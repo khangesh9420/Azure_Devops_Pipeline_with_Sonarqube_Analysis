@@ -1,7 +1,7 @@
 stages:
 - stage: Test
   displayName: Test Image
-  dependsOn: Build
+  dependsOn: BuildAndPushDockerImage
   jobs: 
   - job: Test
     displayName: Unit testing
