@@ -9,32 +9,17 @@ resources:
 - repo: self 
 
 stages:
-- stage: Linters
-  displayName: Linter check for the present file
+- stage: MarkdownLint
+  displayName: Markdown Lint
   jobs:
-  - job: yamllint
-    displayName: YAML Lint
+  - job: markdownlint
+    displayName: Markdown Lint
     pool:
       vmImage: ubuntu-latest
     steps:
     - script: |
-        echo "Installing yamllint"
-        sudo apt-get update
-        sudo apt-get install -y yamllint
-        echo "Running yamllint on .yaml files"
-        find . -type f -name '*.yaml' -exec yamllint {} +
-        echo "Running yamllint on .yml files"
-        find . -type f -name '*.yml' -exec yamllint {} +
-      displayName: Run yamllint
-
-  - job: dotnetlint
-    displayName: dotnet Lint
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - script: |
-        echo "Installing .NET format tool"
-        dotnet tool install -g dotnet-format
-        echo "Running .NET format"
-        dotnet-format --check **/*.cs
-      displayName: Run .NET format
+        echo "Installing markdownlint"
+        npm install -g markdownlint-cli
+        echo "Running markdownlint on .md files"
+        find . -type f -name '*.md' -exec markdownlint {} +
+      displayName: Run markdownlint
