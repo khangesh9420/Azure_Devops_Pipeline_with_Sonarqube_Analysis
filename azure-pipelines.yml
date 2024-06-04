@@ -9,12 +9,10 @@ pr:
       - main
 
 resources:
-- repo: self
-
-pipelines:
-  - pipeline: manualTrigger
-    source: Application_Hosting
-    trigger: none
+  pipelines:
+    - pipeline: manualTrigger
+      source: Application_Hosting
+      trigger: none
 
 variables:
   tag: '$(Build.BuildId)'
