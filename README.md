@@ -202,11 +202,11 @@ Steps:
 
 ### Output
 
-After each release the continuous deployment is happened Using 
-Azure App services where the application is host by the name of 
+After each release the continuous deployment is happened Using
+Azure App services where the application is host by the name of
 "Host-Application"
 
 By clicking the link you can check the output of the Application
+
 - <https://host-application.azurewebsites.net/>
 - <https://host-application.azurewebsites.net/api/weather>
-

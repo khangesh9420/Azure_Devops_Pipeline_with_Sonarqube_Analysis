@@ -4,9 +4,7 @@ trigger:
       - main
 
 pr:
-  branches:
-    include:
-      - main
+  - none
 
 resources:
   pipelines:
