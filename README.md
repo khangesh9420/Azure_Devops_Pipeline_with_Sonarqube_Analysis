@@ -5,15 +5,15 @@ WeatherAPI is a .NET ASP Core application that displays a static web page with w
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
-- [Clone and build the project locally](#clone-and-build-the-project-locally)
+- [Clone and Build the Project Locally](#clone-and-build-the-project-locally)
   - [Cloning the Repository](#cloning-the-repository)
-  - [Building the Project locally](#building-the-project-locally)
+  - [Building the Project Locally](#building-the-project-locally)
 - [Running the Application](#running-the-application)
   - [Using Docker](#using-docker)
   - [Using Docker Compose](#using-docker-compose)
 - [Pipeline Configuration](#pipeline-configuration)
   - [Overview of the Azure DevOps Pipeline](#overview-of-the-azure-devops-pipeline)
-  - [Pipeline defined in several stages](#pipeline-defined-in-several-stages)
+  - [Pipeline Defined in Several Stages](#pipeline-defined-in-several-stages)
   - [Triggers](#triggers)
 - [Infrastructure Overview](#infrastructure-overview)
   - [Build Stage](#build-stage)
@@ -25,12 +25,13 @@ WeatherAPI is a .NET ASP Core application that displays a static web page with w
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
+
 - Install [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
 - Install [GIT](https://docs.github.com/en/desktop/installing-and-authenticating-to-github-desktop/installing-github-desktop)
 - Install [Docker](https://www.docker.com/get-started)
 - You have an [Azure DevOps](https://dev.azure.com/) account and the necessary permissions to create and run CI/CD pipelines.
 
-## Clone and build the project locally
+## Clone and Build the Project Locally
 
 ### Cloning the Repository
 
@@ -40,7 +41,7 @@ Before you begin, ensure you have met the following requirements:
     git clone https://github.com/khangesh9420/azure_devops_dotnet_asp_pipeline.git
     ```
 
-### Building the Project locally 
+### Building the Project Locally
 
 2. Navigate to the project directory and build the project:
 
@@ -48,20 +49,26 @@ Before you begin, ensure you have met the following requirements:
     cd azure_devops_dotnet_asp_pipeline/weatherapi
     dotnet clean
     dotnet build
-    [command below is a normal mode run] 
-    dotnet run 
-    [command below is a detached mode run]
-    dotnet run -d 
     ```
 
-3.  Navigate to the project directory and test the project:
+3. Run the project in normal mode:
 
-     ```bash
-    cd azure_devops_dotnet_asp_pipeline/weatherapi:Tests
+    ```bash
+    dotnet run
+    ```
+
+4. Run the project in detached mode:
+
+    ```bash
+    dotnet run -d
+    ```
+
+5. Navigate to the project directory and test the project:
+
+    ```bash
+    cd ../weatherapi.Tests
     dotnet clean
-    [Run Unit test using below command]
     dotnet test
-    
     ```
 
 ## Running the Application
@@ -72,7 +79,6 @@ Before you begin, ensure you have met the following requirements:
 
     ```bash
     docker build -t khangeshmatte123/dotnet:latest .
-  
     ```
 
 2. Run the Docker container:
@@ -99,10 +105,10 @@ Before you begin, ensure you have met the following requirements:
 
 The Azure DevOps pipeline for WeatherAPI includes multiple stages for building, docker buildpush, testing, and deploying the application. The stages are defined in the `azure-pipelines.yml` file located in the root of the repository.
 
-### Pipeline defined in a sevral stages
+### Pipeline Defined in Several Stages
 
 1. **Build**: Compiles the .NET project and generates artifacts.
-2. **Docker Image Build**: Builds and push Docker images for the .NET project.
+2. **Docker Image Build**: Builds and pushes Docker images for the .NET project.
 3. **Test**: Runs tests to ensure code quality.
 4. **Staging**: Deploys the application to a staging environment.
 5. **Deploy**: Deploys the application to production after successful testing.
@@ -113,12 +119,13 @@ The pipeline is triggered on changes to the `main` branch or when new releases a
 
 ## Infrastructure Overview
 
-The flowchart diagram of Pipeline is look like this
-<img width="215" alt="image" src="https://github.com/khangesh9420/azure_devops_dotnet_asp_pipeline/assets/72436906/100b848c-4773-4fa2-bca4-045c8c372785">
+The flowchart diagram of the pipeline looks like this:
+
+![Pipeline Diagram](https://github.com/khangesh9420/azure_devops_dotnet_asp_pipeline/assets/72436906/100b848c-4773-4fa2-bca4-045c8c372785)
 
 ### Build Stage
 
-The Build stage compiles the project, performs code analysis using SonarCloud, and publishes artifacts for further stages. 
+The Build stage compiles the project, performs code analysis using SonarCloud, and publishes artifacts for further stages.
 
 Steps:
 
@@ -134,44 +141,38 @@ Steps:
 
 ### Build and Push Docker Image Stage
 
-#### Steps:
+Steps:
 
 1. **Build Docker Image**: Builds the Docker image using the specified Dockerfile.
 2. **Push Docker Image**: Pushes the built Docker image to the specified container registry.
 
-#### Conditions:
+Conditions:
 
 - The Push Docker Image task is executed only if the Build stage succeeded and the source branch is `main`.
 
 ### Test Stage
 
-#### Steps:
+Steps:
 
 1. **Unit Testing**: Executes unit tests for the application.
-   
    - **DotNetCoreCLI Task**: Runs unit tests using the .NET Core CLI. It specifies the test project to run, configuration, and collects code coverage data.
 
 ### Staging Deployment Stage
 
 The Staging Deployment stage creates a staging environment for the application. This stage runs after the Test stage and only if the tests have succeeded.
 
-#### Steps:
+Steps:
 
 1. **Creating Staging Environment**: Prepares the staging environment before deployment.
-   
    - **Run Docker Compose**: Utilizes Docker Compose to set up containers defined in the `docker-compose.yml` file.
 
 ### Deployment Stage
 
 The Deployment stage initiates the deployment of the application after successful staging. It utilizes Docker Compose for deployment and checks container status, inspects logs, and performs a health check.
 
-#### Steps:
+Steps:
 
 1. **Deploy**: Utilizes Docker Compose to deploy the application.
-
 2. **Check Container Status**: Verifies container status using `docker ps -a`.
-
 3. **Inspect Container Logs**: Reviews container logs using `docker-compose logs`.
-
 4. **Health Check**: Verifies application health with a curl request.
-
