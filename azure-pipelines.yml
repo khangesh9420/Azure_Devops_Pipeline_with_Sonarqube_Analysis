@@ -4,11 +4,17 @@ trigger:
       - main
 
 pr:
-  - main
-  - releases/*
+  branches:
+    include:
+      - main
 
 resources:
 - repo: self
+
+pipelines:
+  - pipeline: manualTrigger
+    source: Application_Hosting
+    trigger: none
 
 variables:
   tag: '$(Build.BuildId)'
