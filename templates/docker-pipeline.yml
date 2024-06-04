@@ -36,7 +36,7 @@ stages:
         git config user.name "khangesh9420"
         git tag -a v$(Build.BuildId) -m "Release v$(Build.BuildId)"
         git push https://$(System.AccessToken)@github.com/$(Build.Repository.Name).git --tags
-        displayName: 'Tag Source Code with Version Number'
+      displayName: 'Tag Source Code with Version Number'
       env:
         GIT_AUTH_TOKEN: $(System.AccessToken)
 
