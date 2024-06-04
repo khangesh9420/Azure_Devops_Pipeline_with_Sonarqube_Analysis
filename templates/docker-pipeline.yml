@@ -31,12 +31,13 @@ stages:
             latest
       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     
-    - script: |
-        git config user.email "khangeshmatte@gmail.com"
-        git config user.name "khangesh9420"
-        git tag -a v$(Build.BuildId) -m "Release v$(Build.BuildId)"
-        git push https://$(System.AccessToken)@github.com/$(Build.Repository.Name).git --tags
-      displayName: 'Tag Source Code with Version Number'
-      env:
-        GIT_AUTH_TOKEN: $(System.AccessToken)
+    - task: GitHubRelease@1
+      inputs:
+        gitHubConnection: 'Git-tag'
+        repositoryName: '$(Build.Repository.Name)'
+        action: 'create'
+        target: '$(Build.SourceVersion)'
+        tagSource: 'gitTag'
+        changeLogCompareToRelease: 'lastFullRelease'
+        changeLogType: 'commitBased'
 
