@@ -199,3 +199,14 @@ Steps:
 - Check Container Status: Verifies container status using `docker ps -a`.
 - Inspect Container Logs: Reviews container logs using `docker-compose logs`.
 - Health Check: Verifies application health with a curl request.
+
+### Output
+
+After each release the continuous deployment is happened Using 
+Azure App services where the application is host by the name of 
+"Host-Application"
+
+By clicking the link you can check the output of the Application
+- <https://host-application.azurewebsites.net/>
+- <https://host-application.azurewebsites.net/api/weather>
+
