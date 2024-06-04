@@ -31,10 +31,7 @@ stages:
             latest
       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
-    - script: |
-        git tag -a v$(Build.BuildId) -m "Release v$(Build.BuildId)"
-        git push origin --tags
-      displayName: 'Tag Source Code with Version Number'
-      env:
-        GIT_AUTH_TOKEN: github.com_khangesh9420
-
+    - task: TagGitRelease@1
+      inputs:
+        name: '$(System.PhaseName)'
+        message: '$(Build.BuildNumber)'
