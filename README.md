@@ -168,6 +168,7 @@ Conditions:
 Steps:
 
 1. **Unit Testing**: Executes unit tests for the application.
+
 - DotNetCoreCLI Task: Runs unit tests using the .NET
   Core CLI. It specifies the test project to run,
   configuration, and collects code coverage data.
