@@ -16,6 +16,7 @@ variables:
   buildConfiguration: 'Release'
   hosted_agent: ubuntu-latest
   dockerRepo: 'khangeshmatte123/dotnet'
+  System.AccessToken: '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'
 
 stages:
 
