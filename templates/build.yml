@@ -5,7 +5,7 @@ stages:
   - job: build
     displayName: Build
     pool:
-      vmImage: '$(hostedAgent)'
+      vmImage: $(hostedAgent)
     steps:
     - checkout: self
       fetchDepth: 0
