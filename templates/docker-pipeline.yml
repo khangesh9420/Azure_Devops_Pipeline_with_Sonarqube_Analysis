@@ -1,8 +1,3 @@
-
-variables:
-  - group: New_variable_group
-
-
 stages:
 - stage: BuildAndPushDockerImage
   displayName: Build and Push Docker Image
