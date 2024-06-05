@@ -13,11 +13,7 @@ resources:
       trigger: none
 
 variables:
-  tag: '$(Build.BuildId)'
-  containerRegistry: 'asp_dot_net_docker'
-  buildConfiguration: 'Release'
-  hosted_agent: ubuntu-latest
-  dockerRepo: 'khangeshmatte123/dotnet'
+  - group: New_variable_group
 
 stages:
 
