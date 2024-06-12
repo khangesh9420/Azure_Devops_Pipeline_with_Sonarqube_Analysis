@@ -203,7 +203,7 @@ Steps:
 ### Output
 
 After each release the continuous deployment is happened Using
-Azure App services where the application is host by the name of
+Azure App services where the application will host by the name of
 "Host-Application"
 
 By clicking the link you can check the output of the Application
