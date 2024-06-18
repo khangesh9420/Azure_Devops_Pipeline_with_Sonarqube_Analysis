@@ -130,7 +130,7 @@ branch or when new releases are created.
 
 The flowchart diagram of the pipeline looks like this:
 
-![Pipeline Diagram](https://github.com/khangesh9420/azure_devops_dotnet_asp_pipeline/assets/72436906/100b848c-4773-4fa2-bca4-045c8c372785)
+![Pipeline Diagram](https://github.com/khangesh9420/Azure_Devops_Pipeline_with_Sonarqube_Analysis/assets/72436906/448dd108-e599-47c3-86f1-1974f0cb3928)
 
 ### Build Stage
 
